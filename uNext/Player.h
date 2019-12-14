@@ -64,6 +64,7 @@ private:
 	// ----- JUMP
 
 	int jumpState;
+	int jumpStage;
 
 	float startJumpSpeed;
 	float currentJumpSpeed;
@@ -87,6 +88,7 @@ private:
 
 	// ----- Method
 	void movePlayer();
+	bool willCollidInXUnitsDown(int x);
 
 	bool checkCollisionBot(int nX, int nY);
 	bool checkCollisionCenter(int nX, int nY);
@@ -99,6 +101,8 @@ private:
 
 	Vector2* getBlockLT(float nX, float nY);
 	Vector2* getBlockRT(float nX, float nY);
+
+	double getBackflipAngle();
 public:
 	Player(SDL_Renderer* rR, float fXPos, float fYPos);
 	~Player(void);
@@ -171,6 +175,7 @@ public:
 	void setMoveSpeed(int moveSpeed);
 
 	int getJumpState();
+	int getJumpStage();
 
 	bool getSquat();
 	void setSquat(bool bSquat);

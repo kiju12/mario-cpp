@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Player.h"
 #include "Core.h"
 #include "stdlib.h"
@@ -43,6 +44,7 @@ Player::Player(SDL_Renderer* rR, float fXPos, float fYPos) {
 	this->iTimePassed = SDL_GetTicks();
 
 	this->jumpState = 0;
+	this->jumpStage = 0;
 	this->startJumpSpeed = 7.65f;
 	this->currentFallingSpeed = 2.7f;
 
@@ -394,8 +396,13 @@ void Player::playerPhysics() {
 				currentJumpSpeed = 2.5f;
 			}
 
+			if ((currentJumpDistance / jumpDistance) > 0.25) {
+			    jumpStage = 1;
+			}
+
 			if (jumpDistance <= currentJumpDistance) {
 				jumpState = 2;
+				jumpStage = 2;
 			}
 		} else {
 			if(onPlatformID == -1) {
@@ -425,6 +432,7 @@ void Player::playerPhysics() {
 					CCore::getMap()->setXPos(CCore::getMap()->getXPos() - CCore::getMap()->getPlatform(onPlatformID)->getMoveX());
 			
 					jumpState = 0;
+					jumpStage = 0;
 				}
 			}
 			else if (!CCore::getMap()->checkCollisionLB((int)(fXPos - CCore::getMap()->getXPos() + 2), (int)fYPos + 2, getHitBoxY(), true) &&
@@ -445,7 +453,14 @@ void Player::playerPhysics() {
 
 				jumpState = 2;
 
-				setMarioSpriteID(5);
+				if (willCollidInXUnitsDown(80)) {
+				    jumpStage = 3;
+				} else {
+				    jumpStage = 2;
+				}
+
+
+                setMarioSpriteID(5);
 			} else if(jumpState == 2) {
 				resetJump();
 			} else {
@@ -467,12 +482,14 @@ void Player::playerPhysics() {
 
 				if (jumpDistance <= currentJumpDistance) {
 					jumpState = 2;
-					currentJumpDistance = 0;
+                    jumpStage = 2;
+                    currentJumpDistance = 0;
 					nextFallFrameID = 4;
 				}
 			} else {
 				jumpState = 2;
-				nextFallFrameID = 14;
+                jumpStage = 2;
+                nextFallFrameID = 14;
 				currentJumpDistance = 0;
 			}
 		} else {
@@ -491,8 +508,9 @@ void Player::playerPhysics() {
 				}
 
 				jumpState = 2;
+                jumpStage = 2;
 
-				swimingAnimation();
+                swimingAnimation();
 			} else if(jumpState == 2) {
 				resetJump();
 			}
@@ -736,10 +754,12 @@ void Player::startJump(int iH) {
 	}
 
 	jumpState = 1;
+	jumpStage = 0;
 }
 
 void Player::resetJump() {
 	jumpState = 0;
+	jumpStage = 0;
 	jumpDistance = 0;
 	currentJumpDistance = 0;
 	currentFallingSpeed = 2.7f;
@@ -796,11 +816,13 @@ void Player::updateYPos(int iN) {
 		bRIGHT = CCore::getMap()->checkCollisionRB((int)(fXPos - CCore::getMap()->getXPos() - 2), (int)fYPos + iN, getHitBoxX(), getHitBoxY(), true);
 
 		if (!bLEFT && !bRIGHT) {
+
 			fYPos += iN;
 		} else {
 			if (jumpState == 2) {
 				jumpState = 0;
-			}
+                jumpStage = 0;
+            }
 			updateYPos(iN - 1);
 		}
 	} else if(iN < 0) {
@@ -809,7 +831,8 @@ void Player::updateYPos(int iN) {
 
 		if(CCore::getMap()->checkCollisionWithPlatform((int)fXPos, (int)fYPos, 0, 0) >= 0 || CCore::getMap()->checkCollisionWithPlatform((int)fXPos, (int)fYPos, getHitBoxX(), 0) >= 0) {
 			jumpState = 2;
-		}
+            jumpStage = 2;
+        }
 		else if (!bLEFT && !bRIGHT) {
 			fYPos += iN;
 		} else  {
@@ -820,7 +843,8 @@ void Player::updateYPos(int iN) {
 					if(!CCore::getMap()->getBlock(CCore::getMap()->getMapBlock(vRT->getX(), vRT->getY())->getBlockID())->getVisible()) {
 						if(CCore::getMap()->blockUse(vRT->getX(), vRT->getY(), CCore::getMap()->getMapBlock(vRT->getX(), vRT->getY())->getBlockID(), 0)) {
 							jumpState = 2;
-						} else {
+                            jumpStage = 2;
+                        } else {
 							fYPos += iN;
 						}
 					} else if((int)(fXPos + getHitBoxX() - CCore::getMap()->getXPos()) % 32 <= 8) {
@@ -828,12 +852,14 @@ void Player::updateYPos(int iN) {
 					} else if(CCore::getMap()->getBlock(CCore::getMap()->getMapBlock(vRT->getX(), vRT->getY())->getBlockID())->getUse()) {
 						if(CCore::getMap()->blockUse(vRT->getX(), vRT->getY(), CCore::getMap()->getMapBlock(vRT->getX(), vRT->getY())->getBlockID(), 0)) {
 							jumpState = 2;
-						} else {
+                            jumpStage = 2;
+                        } else {
 							fYPos += iN;
 						}
 					} else {
 						jumpState = 2;
-					}
+                        jumpStage = 2;
+                    }
 
 					delete vRT;
 				} else if (bLEFT && !bRIGHT) {
@@ -841,7 +867,8 @@ void Player::updateYPos(int iN) {
 					if(!CCore::getMap()->getBlock(CCore::getMap()->getMapBlock(vLT->getX(), vLT->getY())->getBlockID())->getVisible()) {
 						if(CCore::getMap()->blockUse(vLT->getX(), vLT->getY(), CCore::getMap()->getMapBlock(vLT->getX(), vLT->getY())->getBlockID(), 0)) {
 							jumpState = 2;
-						} else {
+                            jumpStage = 2;
+                        } else {
 							fYPos += iN;
 						}
 					} else if ((int)(fXPos - CCore::getMap()->getXPos()) % 32 >= 24) {
@@ -849,12 +876,14 @@ void Player::updateYPos(int iN) {
 					} else if(CCore::getMap()->getBlock(CCore::getMap()->getMapBlock(vLT->getX(), vLT->getY())->getBlockID())->getUse()) {
 						if(CCore::getMap()->blockUse(vLT->getX(), vLT->getY(), CCore::getMap()->getMapBlock(vLT->getX(), vLT->getY())->getBlockID(), 0)) {
 							jumpState = 2;
-						} else {
+                            jumpStage = 2;
+                        } else {
 							fYPos += iN;
 						}
 					} else {
 						jumpState = 2;
-					}
+                        jumpStage = 2;
+                    }
 
 					delete vLT;
 				} else {
@@ -864,10 +893,12 @@ void Player::updateYPos(int iN) {
 						if (CCore::getMap()->getBlock(CCore::getMap()->getMapBlock(vRT->getX(), vRT->getY())->getBlockID())->getUse()) {
 							if(CCore::getMap()->blockUse(vRT->getX(), vRT->getY(), CCore::getMap()->getMapBlock(vRT->getX(), vRT->getY())->getBlockID(), 0)) {
 								jumpState = 2;
-							}
+                                jumpStage = 2;
+                            }
 						} else {
 							jumpState = 2;
-						}
+                            jumpStage = 2;
+                        }
 
 						delete vRT;
 					} else {
@@ -876,10 +907,12 @@ void Player::updateYPos(int iN) {
 						if (CCore::getMap()->getBlock(CCore::getMap()->getMapBlock(vLT->getX(), vLT->getY())->getBlockID())->getUse()) {
 							if(CCore::getMap()->blockUse(vLT->getX(), vLT->getY(), CCore::getMap()->getMapBlock(vLT->getX(), vLT->getY())->getBlockID(), 0)) {
 								jumpState = 2;
-							}
+                                jumpStage = 2;
+                            }
 						} else {
 							jumpState = 2;
-						}
+                            jumpStage = 2;
+                        }
 
 						delete vLT;
 					}
@@ -901,6 +934,13 @@ void Player::updateYPos(int iN) {
 }
 
 /* ******************************************** */
+
+bool Player::willCollidInXUnitsDown(int x) {
+    bool bLEFT  = CCore::getMap()->checkCollisionLB((int)(fXPos - CCore::getMap()->getXPos() + 2), (int)fYPos + x, getHitBoxY(), true);
+    bool bRIGHT = CCore::getMap()->checkCollisionRB((int)(fXPos - CCore::getMap()->getXPos() - 2), (int)fYPos + x, getHitBoxX(), getHitBoxY(), true);
+
+    return bLEFT && bRIGHT;
+}
 
 bool Player::checkCollisionBot(int nX, int nY) {
 	Vector2* vLT = getBlockLB(fXPos - CCore::getMap()->getXPos() + nX, fYPos + nY);
@@ -1004,13 +1044,43 @@ Vector2* Player::getBlockRT(float nX, float nY) {
 /* ******************************************** */
 
 void Player::Draw(SDL_Renderer* rR) {
+    double currentFlipAngle = getBackflipAngle();
+
 	if(!inLevelDownAnimation || CCore::getMap()->getInEvent()) {
-		sMario[getMarioSpriteID()]->getTexture()->Draw(rR, (int)fXPos, (int)fYPos + (CCore::getMap()->getInEvent() ? 0 : 2), !moveDirection);
+
+	    if (currentFlipAngle == 0) {
+            sMario[getMarioSpriteID()]->getTexture()->Draw(rR, (int)fXPos, (int)fYPos + (CCore::getMap()->getInEvent() ? 0 : 2), !moveDirection);
+        } else {
+            sMario[getMarioSpriteID()]->getTexture()->Draw(rR, (int)fXPos, (int)fYPos + (CCore::getMap()->getInEvent() ? 0 : 2), !moveDirection ? (-1 * currentFlipAngle) : currentFlipAngle);
+        }
+
 	} else {
 		if(inLevelDownAnimationFrameID%15 < (inLevelDownAnimationFrameID > 120 ? 7 : inLevelDownAnimationFrameID > 90 ? 9 : inLevelDownAnimationFrameID > 60 ? 11 : inLevelDownAnimationFrameID > 30 ? 13 : 14)) {
-			sMario[getMarioSpriteID()]->getTexture()->Draw(rR, (int)fXPos, (int)fYPos + (CCore::getMap()->getInEvent() ? 0 : 2), !moveDirection);
+
+            if (currentFlipAngle == 0) {
+                sMario[getMarioSpriteID()]->getTexture()->Draw(rR, (int)fXPos, (int)fYPos + (CCore::getMap()->getInEvent() ? 0 : 2), !moveDirection);
+            } else {
+                sMario[getMarioSpriteID()]->getTexture()->Draw(rR, (int)fXPos, (int)fYPos + (CCore::getMap()->getInEvent() ? 0 : 2), !moveDirection ? (-1 * currentFlipAngle) : currentFlipAngle);
+            }
+
 		}
 	}
+}
+
+double Player::getBackflipAngle() {
+    if (jumpStage == 0) {
+        std::cout << "Mario normalnie\n";
+        return 0;
+    } else if (jumpStage == 1) {
+        std::cout << "Mario o 90stopni-1\n";
+        return -90;
+    } else if (jumpStage == 2) {
+        std::cout << "Mario 180stopni\n";
+        return -180;
+    } else if (jumpStage == 3) {
+        std::cout << "Mario o 270stopni\n";
+        return -270;
+    }
 }
 
 /* ******************************************** */
@@ -1177,6 +1247,10 @@ int Player::getMoveSpeed() {
 
 int Player::getJumpState() {
 	return jumpState;
+}
+
+int Player::getJumpStage() {
+    return jumpStage;
 }
 
 bool Player::getMove() {

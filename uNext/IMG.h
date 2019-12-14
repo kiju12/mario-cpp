@@ -18,7 +18,8 @@ public:
 
 	void Draw(SDL_Renderer * rR, int iXOffset, int iYOffset);
 	void Draw(SDL_Renderer * rR, int iXOffset, int iYOffset, bool bRoate);
-	void DrawVert(SDL_Renderer * rR, int iXOffset, int iYOffset);
+    void Draw(SDL_Renderer * rR, int iXOffset, int iYOffset, double angle);
+    void DrawVert(SDL_Renderer * rR, int iXOffset, int iYOffset);
 	void Draw(SDL_Renderer * rR, SDL_Rect rCrop, SDL_Rect rRect);
 
 	/* ----- get & set ----- */
