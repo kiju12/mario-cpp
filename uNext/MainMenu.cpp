@@ -5,6 +5,8 @@
 /* ******************************************** */
 
 MainMenu::MainMenu(void) {
+
+
 	this->lMO.push_back(new MenuOption("1 PLAYER GAME", 178, 276));
 	this->lMO.push_back(new MenuOption("OPTIONS", 222, 308));
 	this->lMO.push_back(new MenuOption("ABOUT", 237, 340));
@@ -38,6 +40,13 @@ void MainMenu::Draw(SDL_Renderer* rR) {
 	Menu::Draw(rR);
 	CCFG::getText()->Draw(rR, "WWW.LUKASZJAKOWSKI.PL", 4, CCFG::GAME_HEIGHT - 4 - 8, 8, 0, 0, 0);
 	CCFG::getText()->Draw(rR, "WWW.LUKASZJAKOWSKI.PL", 5, CCFG::GAME_HEIGHT - 5 - 8, 8, 255, 255, 255);
+
+    CCFG::getMM()->getLoadingMenu()->updateTime();
+    CCore::getMap()->resetGameData();
+    CCore::getMap()->setCurrentLevelID(activeWorldID * 4 + activeSecondWorldID);
+    CCFG::getMM()->setViewID(CCFG::getMM()->eGameLoading);
+    CCFG::getMM()->getLoadingMenu()->loadingType = true;
+    CCore::getMap()->setSpawnPointID(0);
 
 	if(selectWorld) {
 		SDL_SetRenderDrawBlendMode(rR, SDL_BLENDMODE_BLEND);
