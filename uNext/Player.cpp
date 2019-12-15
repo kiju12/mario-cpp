@@ -1069,16 +1069,12 @@ void Player::Draw(SDL_Renderer* rR) {
 
 double Player::getBackflipAngle() {
     if (jumpStage == 0) {
-        std::cout << "Mario normalnie\n";
         return 0;
     } else if (jumpStage == 1) {
-        std::cout << "Mario o 90stopni-1\n";
         return -90;
     } else if (jumpStage == 2) {
-        std::cout << "Mario 180stopni\n";
         return -180;
     } else if (jumpStage == 3) {
-        std::cout << "Mario o 270stopni\n";
         return -270;
     }
 }
