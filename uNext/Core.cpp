@@ -32,7 +32,7 @@ CCore::CCore(void) {
 
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_AUDIO);
 	
-	window = SDL_CreateWindow("uMario - www.LukaszJakowski.pl", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, CCFG::GAME_WIDTH, CCFG::GAME_HEIGHT, SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow("MARIO", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, CCFG::GAME_WIDTH, CCFG::GAME_HEIGHT, SDL_WINDOW_SHOWN);
 
 	if(window == NULL) {
 		quitGame = true;
@@ -154,10 +154,10 @@ void CCore::InputMenu() {
 				}
 				break;
 			case SDLK_ESCAPE:
-				if(!keyMenuPressed) {
-					CCFG::getMM()->escape();
-					keyMenuPressed = true;
-				}
+//				if(!keyMenuPressed) {
+//					CCFG::getMM()->escape();
+//					keyMenuPressed = true;
+//				}
 				break;
 			case SDLK_LEFT: case SDLK_d:
 				if(!keyMenuPressed) {
@@ -189,10 +189,10 @@ void CCore::InputPlayer() {
 	if(mainEvent->type == SDL_WINDOWEVENT) {
 		switch(mainEvent->window.event) {
 			case SDL_WINDOWEVENT_FOCUS_LOST:
-				CCFG::getMM()->resetActiveOptionID(CCFG::getMM()->ePasue);
-				CCFG::getMM()->setViewID(CCFG::getMM()->ePasue);
-				CCFG::getMusic()->PlayChunk(CCFG::getMusic()->cPASUE);
-				CCFG::getMusic()->PauseMusic();
+//				CCFG::getMM()->resetActiveOptionID(CCFG::getMM()->ePasue);
+//				CCFG::getMM()->setViewID(CCFG::getMM()->ePasue);
+//				CCFG::getMusic()->PlayChunk(CCFG::getMusic()->cPASUE);
+//				CCFG::getMusic()->PauseMusic();
 				break;
 		}
 	}
@@ -247,7 +247,7 @@ void CCore::InputPlayer() {
 		if(mainEvent->key.keysym.sym == CCFG::keyIDS) {
 			if(!keyS) {
 				keyS = true;
-				if(!oMap->getUnderWater() && !oMap->getPlayer()->getInLevelAnimation()) oMap->getPlayer()->setSquat(true);
+//				if(!oMap->getUnderWater() && !oMap->getPlayer()->getInLevelAnimation()) oMap->getPlayer()->setSquat(true);
 			}
 		}
 		
@@ -279,13 +279,13 @@ void CCore::InputPlayer() {
 					keyMenuPressed = true;
 				}
 			case SDLK_ESCAPE:
-				if(!keyMenuPressed && CCFG::getMM()->getViewID() == CCFG::getMM()->eGame) {
-					CCFG::getMM()->resetActiveOptionID(CCFG::getMM()->ePasue);
-					CCFG::getMM()->setViewID(CCFG::getMM()->ePasue);
-					CCFG::getMusic()->PlayChunk(CCFG::getMusic()->cPASUE);
-					CCFG::getMusic()->PauseMusic();
-					keyMenuPressed = true;
-				}
+//				if(!keyMenuPressed && CCFG::getMM()->getViewID() == CCFG::getMM()->eGame) {
+//					CCFG::getMM()->resetActiveOptionID(CCFG::getMM()->ePasue);
+//					CCFG::getMM()->setViewID(CCFG::getMM()->ePasue);
+//					CCFG::getMusic()->PlayChunk(CCFG::getMusic()->cPASUE);
+//					CCFG::getMusic()->PauseMusic();
+//					keyMenuPressed = true;
+//				}
 				break;
 		}
 	}
