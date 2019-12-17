@@ -30,7 +30,7 @@ naszego protagonistę przy każdym skoku.
 <p><b>SPACJA</b> - skok </p>
 <p><b>LSHIFT</b> - sprint oraz strzał </p>
 
-<h3>Zrzuty ekranu z gry</h3>
+Zrzuty ekranu z gry
 ![image_info](img/1.png)
 ![image_info](img/2.png)
 ![image_info](img/3.png)
