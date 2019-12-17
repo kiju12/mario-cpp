@@ -31,7 +31,7 @@ naszego protagonistę przy każdym skoku.
 <p><b>LSHIFT</b> - sprint oraz strzał </p>
 
 <h3>Zrzuty ekranu z gry</h3>
-![image info](img/1.png)
-![image info](img/2.png)
-![image info](img/3.png)
-![image info](img/4.png)
+![image_info](img/1.png)
+![image_info](img/2.png)
+![image_info](img/3.png)
+![image_info](img/4.png)
