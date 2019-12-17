@@ -2451,7 +2451,7 @@ void Map::setBackgroundColor(SDL_Renderer* rR) {
 }
 
 std::string Map::getLevelName() {
-	return "" + std::to_string(1 + currentLevelID/4) + "-" + std::to_string(currentLevelID%4 + 1);
+	return "" + std::to_string(0 + currentLevelID/4) + "-" + std::to_string(currentLevelID%4 + 0);
 }
 
 void Map::loadMinionsLVL_1_1() {
@@ -3659,10 +3659,10 @@ void Map::loadLVL() {
 			loadLVL_1_1();
 			break;
 		case 1:
-			loadLVL_1_2();
+			loadLVL_1_1();
 			break;
 		case 2:
-			loadLVL_1_3();
+			loadLVL_1_1();
 			break;
 		case 3:
 			loadLVL_1_4();
@@ -8750,7 +8750,7 @@ void Map::EndUse() {
 			oEvent->newLevelType = 0;
 
 			oEvent->iDelay = 1500;
-			oEvent->newCurrentLevel = 2;
+			oEvent->newCurrentLevel = 1;
 			oEvent->inEvent = false;
 
 			oEvent->newMapXPos = 0;
@@ -8856,7 +8856,7 @@ void Map::EndUse() {
 			oEvent->newLevelType = 3;
 
 			oEvent->iDelay = 1500;
-			oEvent->newCurrentLevel = currentLevelID + 1;
+			oEvent->newCurrentLevel = currentLevelID + 0;
 			oEvent->inEvent = false;
 
 			oEvent->newMapXPos = 0;
@@ -8884,7 +8884,7 @@ void Map::EndUse() {
 			oEvent->newLevelType = 4;
 
 			oEvent->iDelay = 1500;
-			oEvent->newCurrentLevel = currentLevelID + 1;
+			oEvent->newCurrentLevel = currentLevelID + 0;
 			oEvent->inEvent = false;
 
 			oEvent->newMapXPos = 0;
@@ -8907,7 +8907,7 @@ void Map::EndUse() {
 			oEvent->newLevelType = 4;
 
 			oEvent->iDelay = 1500;
-			oEvent->newCurrentLevel = currentLevelID + 1;
+			oEvent->newCurrentLevel = currentLevelID + 0;
 			oEvent->inEvent = false;
 
 			oEvent->newMapXPos = 0;
@@ -8930,7 +8930,7 @@ void Map::EndUse() {
 			oEvent->newLevelType = 3;
 
 			oEvent->iDelay = 1500;
-			oEvent->newCurrentLevel = currentLevelID + 1;
+			oEvent->newCurrentLevel = currentLevelID + 0;
 			oEvent->inEvent = false;
 
 			oEvent->newMapXPos = 0;
@@ -8958,7 +8958,7 @@ void Map::EndUse() {
 			oEvent->newLevelType = 100;
 
 			oEvent->iDelay = 1500;
-			oEvent->newCurrentLevel = currentLevelID + 1;
+			oEvent->newCurrentLevel = currentLevelID + 0;
 			oEvent->inEvent = true;
 
 			oEvent->newMapXPos = -240*32;
@@ -8981,7 +8981,7 @@ void Map::EndUse() {
 			oEvent->newLevelType = 0;
 
 			oEvent->iDelay = 1500;
-			oEvent->newCurrentLevel = currentLevelID + 1;
+			oEvent->newCurrentLevel = currentLevelID + 0;
 			oEvent->inEvent = false;
 
 			oEvent->newMapXPos = 0;
@@ -9004,7 +9004,7 @@ void Map::EndUse() {
 			oEvent->newLevelType = 3;
 
 			oEvent->iDelay = 1500;
-			oEvent->newCurrentLevel = currentLevelID + 1;
+			oEvent->newCurrentLevel = currentLevelID + 0;
 			oEvent->inEvent = false;
 
 			oEvent->newMapXPos = 0;
@@ -9033,7 +9033,7 @@ void Map::EndUse() {
 			oEvent->newLevelType = 0;
 
 			oEvent->iDelay = 1500;
-			oEvent->newCurrentLevel = currentLevelID + 1;
+			oEvent->newCurrentLevel = currentLevelID + 0;
 			oEvent->inEvent = false;
 
 			oEvent->newMapXPos = -80*32;
@@ -9057,7 +9057,7 @@ void Map::EndUse() {
 			oEvent->newLevelType = 0;
 
 			oEvent->iDelay = 1500;
-			oEvent->newCurrentLevel = currentLevelID + 1;
+			oEvent->newCurrentLevel = currentLevelID + 0;
 			oEvent->inEvent = false;
 
 			oEvent->newMapXPos = 0;
@@ -9081,7 +9081,7 @@ void Map::EndUse() {
 			oEvent->newLevelType = 3;
 
 			oEvent->iDelay = 1500;
-			oEvent->newCurrentLevel = currentLevelID + 1;
+			oEvent->newCurrentLevel = currentLevelID + 0;
 			oEvent->inEvent = false;
 
 			oEvent->newMapXPos = 0;
@@ -9110,7 +9110,7 @@ void Map::EndUse() {
 			oEvent->newLevelType = 4;
 
 			oEvent->iDelay = 1500;
-			oEvent->newCurrentLevel = currentLevelID + 1;
+			oEvent->newCurrentLevel = currentLevelID + 0;
 			oEvent->inEvent = false;
 
 			oEvent->newMapXPos = -85*32;
@@ -9139,7 +9139,7 @@ void Map::EndUse() {
 			oEvent->newLevelType = 4;
 
 			oEvent->iDelay = 1500;
-			oEvent->newCurrentLevel = currentLevelID + 1;
+			oEvent->newCurrentLevel = currentLevelID + 0;
 			oEvent->inEvent = false;
 
 			oEvent->newMapXPos = 0;
@@ -9168,7 +9168,7 @@ void Map::EndUse() {
 			oEvent->newLevelType = 3;
 
 			oEvent->iDelay = 1500;
-			oEvent->newCurrentLevel = currentLevelID + 1;
+			oEvent->newCurrentLevel = currentLevelID + 0;
 			oEvent->inEvent = false;
 
 			oEvent->newMapXPos = 0;
@@ -9197,7 +9197,7 @@ void Map::EndUse() {
 			oEvent->newLevelType = 100;
 
 			oEvent->iDelay = 1500;
-			oEvent->newCurrentLevel = currentLevelID + 1;
+			oEvent->newCurrentLevel = currentLevelID + 0;
 			oEvent->inEvent = true;
 
 			oEvent->newMapXPos = -220*32;
@@ -9221,7 +9221,7 @@ void Map::EndUse() {
 			oEvent->newLevelType = 0;
 
 			oEvent->iDelay = 1500;
-			oEvent->newCurrentLevel = currentLevelID + 1;
+			oEvent->newCurrentLevel = currentLevelID + 0;
 			oEvent->inEvent = false;
 
 			oEvent->newMapXPos = 0;
@@ -9250,7 +9250,7 @@ void Map::EndUse() {
 			oEvent->newLevelType = 3;
 
 			oEvent->iDelay = 1500;
-			oEvent->newCurrentLevel = currentLevelID + 1;
+			oEvent->newCurrentLevel = currentLevelID + 0;
 			oEvent->inEvent = false;
 
 			oEvent->newMapXPos = 0;
